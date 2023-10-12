@@ -1,3 +1,3 @@
-module github.com/yogavredizon/go-modules
+module github.com/yogavredizon/todolist
 
-go 1.19
+go 1.21.1
