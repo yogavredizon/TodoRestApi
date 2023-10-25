@@ -8,60 +8,66 @@ import (
 	"github.com/yogavredizon/todolist/pkg/model"
 )
 
-type Todo model.Todo
-
-func (t *Todo) AddTodo(task, timeTodo string) (Todo, error) {
-	if task == "" {
-		return *t, errors.New("task can't blank")
+func AddTodo(todo, timeTodo string) error {
+	if todo == "" {
+		return errors.New("todo can't blank")
 	}
+	getHour := helper.GetHour(timeTodo)
 
-	for _, todo := range t.Todo {
-		if todo == task {
-			return *t, errors.New("task already taken")
+	for _, t := range model.Todo {
+		if todo == t.Todo || timeTodo == getHour.GoString() {
+			return errors.New("todo or Time already attempt")
 		}
 	}
 
-	t.Todo = append(t.Todo, task)
-	t.Time = append(t.Time, helper.GetHour(timeTodo))
+	var newTodo model.Task
 
-	return *t, nil
+	// newTodo.Id++
+	newTodo.Todo = todo
+	newTodo.Time = getHour
+
+	model.Todo = append(model.Todo, newTodo)
+
+	return nil
 }
 
-func (t *Todo) ShowTodo() {
-
-	for i, todo := range t.Todo {
-		fmt.Printf("%d. %s : %d:%d \n", i+1, todo, t.Time[i].Hour(), t.Time[i].Minute())
+func ShowTodo() {
+	for i, todo := range model.Todo {
+		fmt.Printf("%d. %s : %d:%d \n", i+1, todo.Todo, todo.Time.Hour(), todo.Time.Minute())
 	}
 }
 
-func (t *Todo) RemoveTodo(id int) (int, error) {
-	id = id - 1
+func RemoveTodo(id int) (int, error) {
 
-	if id > len(t.Todo)-1 {
-		return -1, errors.New("id not found")
+	if id < 1 {
+		return id, errors.New("id not Found")
 	}
 
-	t.Todo = append(t.Todo[:id], t.Todo[id+1:]...)
-	t.Time = append(t.Time[:id], t.Time[id+1:]...)
+	for i := 0; i < len(model.Todo); i++ {
+		if id == i {
+			model.Todo = append(model.Todo[:id], model.Todo[id+1:]...)
+		}
+	}
 
 	return id + 1, nil
 }
 
-func (t *Todo) UpdateTime(id int, timeTodo string) (int, error) {
+func UpdateTime(id int, timeTodo string) (int, error) {
 	id -= 1
-	if id > len(t.Time)-1 {
+	if id > len(model.Todo)-1 {
 		return -1, errors.New("id not found")
 	}
-	t.Time[id] = helper.GetHour(timeTodo)
+	model.Todo[id].Time = helper.GetHour(timeTodo)
 
 	return id + 1, nil
 }
-func (t *Todo) UpdateTodo(id int, todo string) (int, error) {
+
+func UpdateTodo(id int, todo string) (int, error) {
 	id -= 1
-	if id > len(t.Todo)-1 {
+	if id > len(model.Todo)-1 {
 		return -1, errors.New("id not found")
 	}
-	t.Todo[id] = todo
+	model.Todo[id].Todo = todo
 
 	return id + 1, nil
 }

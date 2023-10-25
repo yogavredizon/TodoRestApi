@@ -2,7 +2,9 @@ package model
 
 import "time"
 
-type Todo struct {
-	Todo []string
-	Time []time.Time
+type Task struct {
+	Todo string
+	Time time.Time
 }
+
+var Todo = []Task{}
