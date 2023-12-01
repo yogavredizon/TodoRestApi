@@ -3,8 +3,8 @@ package test
 import (
 	"testing"
 
-	"github.com/yogavredizon/todolist/pkg/config"
-	"github.com/yogavredizon/todolist/pkg/repository"
+	"github.com/yogavredizon/todolist/config"
+	"github.com/yogavredizon/todolist/repository"
 )
 
 func TestQuery(t *testing.T) {

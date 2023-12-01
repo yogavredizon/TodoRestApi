@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/yogavredizon/todolist/pkg/controller"
+	"github.com/yogavredizon/todolist/controller"
 )
 
 func TestFetchTodos(t *testing.T) {

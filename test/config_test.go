@@ -3,8 +3,7 @@ package test
 import (
 	"testing"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/yogavredizon/todolist/pkg/config"
+	"github.com/yogavredizon/todolist/config"
 )
 
 func TestDBConn(t *testing.T) {
